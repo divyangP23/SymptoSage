@@ -22,3 +22,5 @@ Brain Tumor Prediction using MRI Image:
 Users can upload MRI images of the brain.
 The system leverages a trained machine learning model to predict the presence of a brain tumor.
 Users receive the prediction results, along with additional instructions on the next steps to take.
+
+
