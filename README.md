@@ -23,4 +23,9 @@ Users can upload MRI images of the brain.
 The system leverages a trained machine learning model to predict the presence of a brain tumor.
 Users receive the prediction results, along with additional instructions on the next steps to take.
 
+Download Brain Tumor Model from this driv elink
+https://drive.google.com/drive/folders/1CkehBlO6VO-sezxnihJduryj6juts-fE?usp=sharing
+
+Correspondingly change the bestmodel.h5 link in .py file
+
 
