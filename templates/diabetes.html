@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptoSage</title>
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #232323;
+        overflow: hidden;
+        padding: 100px 20px;
+        box-sizing: border-box;
+    }
+
+    section::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ef3b36;
+        clip-path: circle(65% at 100% -20%);
+    }
+
+    section::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #47aafa;
+        clip-path: circle(35% at 0% 100%);
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+
+
+    .container .card:nth-child(2),
+    .container .card:nth-child(3),
+    .container .card:nth-child(4) {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        margin: 20px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(15px);
+        transition: 0.5s ease-in-out;
+    }
+
+    /* Apply styles to the 2nd, 3rd, and 4th child elements with the class "card" */
+    .container .card:nth-child(2):hover,
+    .container .card:nth-child(3):hover,
+    .container .card:nth-child(4):hover {
+        height: 450px;
+        width: 350px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:nth-child(2) .imgBx,
+    .container .card:nth-child(3) .imgBx,
+    .container .card:nth-child(4) .imgBx {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 30px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:nth-child(2):hover .imgBx,
+    .container .card:nth-child(3):hover .imgBx,
+    .container .card:nth-child(4):hover .imgBx {
+        transform: translateY(-100px);
+    }
+
+    .container .card:nth-child(2) .imgBx img,
+    .container .card:nth-child(3) .imgBx img,
+    .container .card:nth-child(4) .imgBx img {
+        max-width: 100%;
+        margin: 0 0 20px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:nth-child(2):hover .imgBx img,
+    .container .card:nth-child(3):hover .imgBx img,
+    .container .card:nth-child(4):hover .imgBx img {
+        transform: translate(-20px, -40px) rotate(-10deg) scale(1.4);
+    }
+
+    .container .card:nth-child(2) .imgBx h2,
+    .container .card:nth-child(3) .imgBx h2,
+    .container .card:nth-child(4) .imgBx h2 {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .container .card:nth-child(2) .content,
+    .container .card:nth-child(3) .content,
+    .container .card:nth-child(4) .content {
+        position: relative;
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.5s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .container .card:nth-child(2):hover .content,
+    .container .card:nth-child(3):hover .content,
+    .container .card:nth-child(4):hover .content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50px);
+    }
+
+    .container .card:nth-child(2) .content .description,
+    .container .card:nth-child(3) .content .description,
+    .container .card:nth-child(4) .content .description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 20px;
+        transition: 0.5s ease-in-out;
+    }
+
+
+
+    .container .card:nth-child(2):hover .content .description,
+    .container .card:nth-child(3):hover .content .description,
+    .container .card:nth-child(4):hover .content .description {
+        transform: translateY(-50px) scale(1.1);
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:nth-child(2) .content .description h3,
+    .container .card:nth-child(3) .content .description h3,
+    .container .card:nth-child(4) .content .description h3 {
+        color: #fff;
+        font-weight: 300;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+
+    .container .card:nth-child(2):hover .content .description h3,
+    .container .card:nth-child(3):hover .content .description h3,
+    .container .card:nth-child(4):hover .content .description h3 {
+        color: #fff;
+    }
+
+    .container .card:nth-child(2) .content a,
+    .container .card:nth-child(3) .content a,
+    .container .card:nth-child(4) .content a {
+        position: relative;
+        top: 10px;
+        display: inline-block;
+        padding: 12px 30px;
+        background: #fff;
+        border-radius: 40px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #111;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.5s ease-in-out;
+        cursor: pointer;
+    }
+
+    .container .card:nth-child(2):hover .content a,
+    .container .card:nth-child(3):hover .content a,
+    .container .card:nth-child(4):hover .content a {
+        transform: translateY(-30px) scale(1.1);
+        transition: 0.5s ease-in-out;
+        background: purple;
+        color: #fff;
+    }
+
+    .container .card:first-child {
+        position: relative;
+        width: 90vw;
+        /* height: 100vh; */
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(15px);
+        transition: 0.5s ease-in-out;
+        display: flex;
+        flex-direction:row;
+        padding: 30px;
+        flex-wrap: wrap;
+        /* align-items: center; */
+    }
+    .container .card:first-child .imgBx{
+        /* border: 2px solid red; */
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 5%;
+    }
+
+    .container .card:first-child .imgBx h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        flex-wrap: wrap;
+        /* height: 10%; */
+        
+    }
+
+
+    .container .card:first-child .content {
+        display: flex;
+        flex-direction: column;
+        transition: 0.5s ease-in-out;
+        /* border: 2px solid green; */
+        flex-wrap: wrap;
+    }
+
+    .container .card:first-child .content .description {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 20px;
+        transition: 0.5s ease-in-out;
+        /* border: 2px solid red; */
+        flex-wrap: wrap;
+    }
+
+    .container .card:first-child .content .description form {
+        /* border: 2px solid white; */
+        width: 100%;
+        display: flex;
+        padding: 10px;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .container .card:first-child .content .description form div:nth-child(1),
+    .container .card:first-child .content .description form div:nth-child(2) {
+        /* border: 2px solid yellow; */
+        color: #fff;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: space-around; */
+        padding: 5px;
+        gap: 1rem;
+        width: 48%;
+        flex-basis: 48%;
+
+
+    }
+
+    .container .card:first-child .content .description form div:nth-child(1) input,
+    .container .card:first-child .content .description form div:nth-child(2) input {
+        border: 2px solid transparent;
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 75%;
+        font-size: 1.4rem;
+        text-align: left;
+        box-shadow: 10px 0 10px rgba(0, 0, 0, 0.15);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        padding-left: 1vw;
+        color: aliceblue;
+        /* border: 2px solid yellow; */
+        flex-wrap: wrap;
+    }
+
+    .container .card:first-child .content .description form div:nth-child(3),
+    .container .card:first-child .content .description form div:nth-child(4),
+    .container .card:first-child .content .description form div:nth-child(5) {
+        margin-top: 3vh;
+        /* border: 2px solid yellow; */
+        color: #0ed1db;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: space-around; */
+        padding: 5px;
+        gap: 1rem;
+        width: 33%;
+        place-content: center;
+
+    }
+
+    .container .card:first-child .content .description form div:nth-child(3) input,
+    .container .card:first-child .content .description form div:nth-child(4) input,
+    .container .card:first-child .content .description form div:nth-child(5) input {
+        border: 2px solid transparent;
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 40%;
+        font-size: 1.4rem;
+        text-align: left;
+        box-shadow: 10px 0 10px rgba(0, 0, 0, 0.15);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        padding-left: 1vw;
+        color: #0ed1db;
+        position: relative;
+        margin-left: 1vw;
+        flex-wrap: wrap;
+
+    }
+
+    .container .card:first-child .content .description form div:nth-child(6),
+    .container .card:first-child .content .description form div:nth-child(7) {
+        margin-top: 3vh;
+        /* border: 2px solid yellow; */
+        color: #0edb11;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+        gap: 1rem;
+        width: 50%;
+        place-content: center;
+
+    }
+
+    .container .card:first-child .content .description form div:nth-child(6) input,
+    .container .card:first-child .content .description form div:nth-child(7) input {
+        /* border: 2px solid transparent; */
+        border: none;
+        outline: none;
+        background: transparent;
+        /* width: 40%; */
+        font-size: 1.4rem;
+        text-align: left;
+        box-shadow: 10px 0 10px rgba(0, 0, 0, 0.15);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        padding-left: 1vw;
+        color: #0edb11;
+        position: relative;
+        /* margin-left: 1vw; */
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .container .card:first-child .content .description form div:nth-child(8),
+    .container .card:first-child .content .description form div:nth-child(9), 
+    .container .card:first-child .content .description form div:nth-child(10) {
+        margin-top: 3vh;
+        /* border: 2px solid yellow; */
+        color: #fbf307;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+        gap: 1rem;
+        width: 33%;
+        place-content: center;
+
+    }
+
+    .container .card:first-child .content .description form div:nth-child(8) input,
+    .container .card:first-child .content .description form div:nth-child(9) input,
+    .container .card:first-child .content .description form div:nth-child(10) input {
+        /* border: 2px solid transparent; */
+        border: none;
+        outline: none;
+        background: transparent;
+        /* width: 40%; */
+        font-size: 1.4rem;
+        text-align: left;
+        box-shadow: 10px 0 10px rgba(0, 0, 0, 0.15);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        padding-left: 1vw;
+        color:#b5db0e;
+        position: relative;
+        /* margin-left: 1vw; */
+        justify-content: space-around;
+        flex-wrap: wrap;
+        
+        
+    }
+ 
+    
+    .container .card:first-child .content .description form div:nth-child(11) {
+        margin-top: 3vh;
+        /* border: 2px solid yellow; */
+        color: #0edb11;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+        gap: 1rem;
+        width: 100%;
+        place-content: center;
+
+
+    }
+    .container .card:first-child .content .description form div:nth-child(11) input {
+        border: none;
+        outline: none;
+        font-size: 1.4rem;
+        text-align: left;
+        background: #fff;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.55);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        color:#db0e37;
+        position: relative;
+        justify-content: space-around;
+        border-radius: 30%;
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+        
+    }
+    .container .card:first-child .content .description form div:nth-child(11) input:hover {
+        border: none;
+        outline: none;
+        font-size: 1.4rem;
+        text-align: left;
+        background: purple;
+        box-shadow: 10px 0px 0px rgba(0, 0, 0, 0.15);
+        color:#fff;
+        position: relative;
+        justify-content: space-around;
+        border-radius: 30%;
+        padding: 10px;
+        cursor: pointer;
+        transform: scale(1.2) translateY(-10px);
+        transition: 0.5s ease-in-out;
+        
+    }
+    .container .card:first-child .content .description form div:nth-child(12) {
+        margin-top: 3vh;
+        /* border: 2px solid yellow; */
+        color: #0edb11;
+        font-size: 1.4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+        gap: 1rem;
+        width: 100%;
+        place-content: center;
+
+
+    }
+    .container .card:first-child .content .description form div:nth-child(12) input {
+        border: none;
+        outline: none;
+        font-size: 1.4rem;
+        text-align: left;
+        background: transparent;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.55);
+        text-shadow: 10px 10px 10px rgba(0, 255, 0, 0.12);
+        color:#dbaf0e;
+        position: relative;
+        justify-content: space-around;
+        /* border-radius: 30%; */
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+        text-align: center;
+        
+    }
+
+</style>
+
+<body>
+
+    <section>
+        <div class="container">
+            <div class="card">
+                <div class="imgBx">
+                    <h2>Diabetes Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <form action="/diabetes_submit" method="POST">
+                            <div><label for="name">Name :</label>
+                                <input type="text" name="name" id="name" readonly value="{{name}}">
+                            </div>
+                            <div><label for="email">Email :</label>
+                                <input type="text" name="email" id="email" readonly value="{{email}}">
+                            </div>
+                            <div><label for="age">Age :</label>
+                                <input type="number" name="age" id="age" required>
+                            </div>
+                            <div><label for="bmi">Body Mass Index : </label>
+                                <input type="number" name="bmi" id="bmi" required>
+                            </div>
+                            <div><label for="glucose">Glucose Level : </label>
+                                <input type="number" name="glucose" id="glucose" required>
+                            </div>
+                            <div>
+                                <label for="bplevel">Blood Pressure Level : </label>
+                                <input type="number" name="bplevel" id="bplevel" required>
+                            </div>
+                            <div>
+                                <label for="pregnancies">Number of Pregnancies : </label>
+                                <input type="number" name="pregnancies" id="pregnancies" required>
+                            </div>
+                            <div>
+                                <label for="insulin_level">Insulin Level : </label>
+                                <input type="number" name="insulin_level" id="insulin_level" required>
+                            </div>
+                            <div>
+                                <label for="skin_level">Skin Thickness Level : </label>
+                                <input type="number" name="skin_level" id="skin_level" required>
+                            </div>
+                            <div>
+                                <label for="Diabetesfun">Diabetes Pedigree Function : </label>
+                                <input type="number" name="Diabetesfun" id="Diabetesfun" required>
+                            </div>
+                            <div>
+                                <input type="submit" name="submit" id="submit" value="Predict">
+                            </div>
+                            {% if message %}
+                            <div>
+                                <input type="text" name="message" id="message" value="{{message}}" readonly>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/stroke.png')}}" alt="stroke" width="150"
+                        height="100">
+                    <h2>Stroke Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>
+                            Experience our cutting-edge brain stroke prediction platform, leveraging advanced AI
+                            technology for precise early detection of potential strokes. Prioritize your well-being,
+                            gaining peace of mind with our comprehensive solution. Take control of your health and
+                            ensure a healthier future through proactive management and timely medical intervention.
+                        </h3>
+                    </div>
+                    <a href="/stroke">Predict</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/common.png')}}" alt="disease" width="150"
+                        height="100">
+                    <h2>Disease Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>
+                            Our AI-driven platform offers precise early detection of common diseases, empowering
+                            proactive health management and timely medical intervention. Take control of your
+                            well-being, making informed decisions for a healthier, more fulfilling life and securing a
+                            better future. Experience the precision and benefit from our advanced technology today.
+                        </h3>
+                    </div>
+                    <a href="/common">Predict</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/tumor.png')}}" alt="tumour" width="150" height="100">
+                    <h2>Tumor Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>Unveil our advanced brain tumor prediction website, employing state-of-the-art AI technology
+                            for precise early detection. Empower proactive health management, ensuring timely medical
+                            attention. Take charge of your well-being today, prioritizing your health for a brighter and
+                            healthier future. Experience the cutting-edge of medical innovation for peace of mind.
+                        </h3>
+                    </div>
+                    <a href="/tumor">Predict</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

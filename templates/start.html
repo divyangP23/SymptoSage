@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptoSage</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"></head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #131419;
+    }
+
+    .form {
+        position: relative;
+        width: 350px;
+        padding: 40px 40px 60px;
+        background: #131419;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+            5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+    .title{
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        align-items: center;
+        /* border: 2px solid red; */
+    }
+    .title button{
+        font-size: 25px;
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+    }
+    i{
+        color: #fff;
+        transition: 0.5s ease-in-out;
+
+    }
+    .form h2 {
+        color: #c7c7c7;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0 auto;
+    }
+
+    .form .input {
+        text-align: left;
+        margin-top: 40px;
+    }
+
+    .form .input .inputBox {
+        margin-top: 20px;
+    }
+
+    .form .input .inputBox label {
+        display: block;
+        color: #868686;
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
+
+    .form .input .inputBox input {
+        width: 100%;
+        height: 50px;
+        background: #131419;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        padding: 5px 15px;
+        color: #fff;
+        font-size: 13px;
+        color: #03a9f4;
+        box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+            inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .form .input .inputBox input[type="submit"] {
+        margin-top: 20px;
+        box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+            2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .form .input .inputBox input[type="submit"]:active {
+        color: #006c9c;
+        margin-top: 20px;
+        box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+            inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .form .input .inputBox input::placeholder {
+        color: #555;
+        font-size: 13px;
+    }
+</style>
+
+<body>
+    <div class="form">
+        <div class="title">
+            <h2>SymptoSage</h2>
+            <button onclick="theme()">
+                <i class="las la-sun"></i>
+            </button>
+        </div>
+        <div class="input">
+            <form action="/start" method="POST">
+                <div class="inputBox">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Enter Your Name" required>
+
+                </div>
+                <div class="inputBox">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Enter Your Email-ID" required>
+
+                </div>
+                <div class="inputBox">
+                    <input type="submit" name="submit" value="Let's Start">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function theme() {
+        var icon = document.querySelector("button i");
+        if (icon.className === "las la-moon") {
+            icon.className = "las la-sun";
+            document.body.style.background = "";
+            document.body.style.transition = "0.5s ease-in-out";
+            document.querySelector(".form").style.background = "";
+            document.querySelector(".form").style.transition = "0.5s ease-in-out";
+            document.querySelector(".form h2").style.color = "";
+            
+            document.querySelector(".title i").style.color = "";
+            document.querySelector(".form .input .inputBox input[name='name']").style.background = "";
+            document.querySelector(".form .input .inputBox input[name='email']").style.background = "";
+            document.querySelector(".form .input .inputBox input[name='submit']").style.background = "";
+            document.querySelector(".form .input .inputBox label[for='name']").style.color = "";
+            document.querySelector(".form .input .inputBox label[for='email']").style.color = "";
+
+        } else {
+            icon.className = "las la-moon";
+            document.body.style.background = "#ebf5fc";
+            document.body.style.transition = "0.5s ease-in-out";
+            document.querySelector(".form").style.background = "#ebf5fc";
+            document.querySelector(".form").style.transition = "0.5s ease-in-out";
+
+            document.querySelector(".form h2").style.color = "#131419";
+            document.querySelector(".title i").style.color = "#131419";
+            document.querySelector(".form .input .inputBox input[name='name']").style.background = "#ebf5fc";
+            document.querySelector(".form .input .inputBox input[name='email']").style.background = "#ebf5fc";
+            document.querySelector(".form .input .inputBox input[name='submit']").style.background = "#ebf5fc";
+            document.querySelector(".form .input .inputBox label[for='name']").style.color = "#131419";
+            document.querySelector(".form .input .inputBox label[for='email']").style.color = "#131419";
+
+        }
+
+    }
+</script>
+</html>

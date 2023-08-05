@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptoSage</title>
+    
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #232323;
+        overflow: hidden;
+        padding: 100px 20px;
+        box-sizing: border-box;
+    }
+
+    section::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ef3b36;
+        clip-path: circle(65% at 100% -20%);
+    }
+
+    section::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #47aafa;
+        clip-path: circle(35% at 0% 100%);
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .container .card {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        margin: 20px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(15px);
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:hover {
+        height: 450px;
+        width: 350px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card .imgBx {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 30px;
+        transition: 0.5s ease-in-out;
+
+    }
+
+    .container .card:hover .imgBx {
+        transform: translateY(-100px);
+    }
+
+    .container .card .imgBx img {
+        max-width: 100%;
+        margin: 0 0 20px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:hover .imgBx img {
+        transform: translate(-20px, -40px) rotate(-10deg) scale(1.4);
+    }
+
+    .container .card .imgBx h2 {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .container .card .content {
+        position: relative;
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.5s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .container .card:hover .content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50px);
+    }
+
+    .container .card .content .description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 20px;
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:hover .content .description {
+        transform: translateY(-50px) scale(1.1);
+        transition: 0.5s ease-in-out;
+
+
+    }
+
+    .container .card .content .description h3 {
+        color: #fff;
+        font-weight: 300;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        /* margin-right: 10px; */
+    }
+
+    .container .card:hover .content .description h3 {
+        color: #fff;
+    }
+
+    .container .card .content a {
+        position: relative;
+        top: 10px;
+        display: inline-block;
+        padding: 12px 30px;
+        background: #fff;
+        border-radius: 40px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #111;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.5s ease-in-out;
+        cursor: pointer;
+    }
+
+    .container .card:hover .content a {
+        transform: translateY(-30px) scale(1.1);
+        transition: 0.5s ease-in-out;
+        background: purple;
+        color: #fff;
+    }
+</style>
+
+<body>
+
+    <section>
+        <div class="container">
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/stroke.png')}}" alt="stroke" width="150"
+                        height="100">
+                    <h2>Stroke Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>
+                            Experience our cutting-edge brain stroke prediction platform, leveraging advanced AI
+                            technology for precise early detection of potential strokes. Prioritize your well-being,
+                            gaining peace of mind with our comprehensive solution. Take control of your health and
+                            ensure a healthier future through proactive management and timely medical intervention.
+                        </h3>
+                    </div>
+                    <a href="/stroke">Predict</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/diabetes.png')}}" alt="diabetes" width="150"
+                        height="100">
+                    <h2>Diabetes Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>Explore our advanced diabetes prediction model website, powered by state-of-the-art AI technology. Receive accurate and personalized assessments to stay proactive in managing your health and detect diabetes early on. Take control of your well-being today, embracing a healthier tomorrow through informed decisions and timely interventions.
+                        </h3>
+                    </div>
+                    <a href="/diabetes">Predict</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/common.png')}}" alt="disease" width="150" height="100">
+                    <h2>Disease Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>
+                            Our AI-driven platform offers precise early detection of common diseases, empowering proactive health management and timely medical intervention. Take control of your well-being, making informed decisions for a healthier, more fulfilling life and securing a better future. Experience the precision and benefit from our advanced technology today.
+                        </h3>
+                    </div>
+                    <a href="/common">Predict</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="imgBx">
+                    <img src="{{url_for('static',filename='images/tumor.png')}}" alt="tumour" width="150" height="100">
+                    <h2>Tumor Prediction</h2>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <h3>Unveil our advanced brain tumor prediction website, employing state-of-the-art AI technology for precise early detection. Empower proactive health management, ensuring timely medical attention. Take charge of your well-being today, prioritizing your health for a brighter and healthier future. Experience the cutting-edge of medical innovation for peace of mind.
+                        </h3>
+                    </div>
+                    <a href="/tumor">Predict</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>
