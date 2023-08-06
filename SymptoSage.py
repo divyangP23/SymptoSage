@@ -62,13 +62,13 @@ def common():
     print(email)
     message = ''
     data_ds = pd.read_csv(
-        r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\disease_symptoms.csv")
-    desc = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\symptom_Description.csv")
-    prec = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\symptom_precaution.csv")
-    doct = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\Doctor_Versus_Disease.csv",
+        r"disease_symptoms.csv")
+    desc = pd.read_csv(r"symptom_Description.csv")
+    prec = pd.read_csv(r"symptom_precaution.csv")
+    doct = pd.read_csv(r"Doctor_Versus_Disease.csv",
                        encoding='latin1')
 
-    with open(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\unique_symptoms.pkl", "rb") as f:
+    with open(r"unique_symptoms.pkl", "rb") as f:
         unique_sym = pickle.load(f)
 
     return render_template('common.html',name=name,email=email,message=message,unique_sym=unique_sym)
@@ -89,9 +89,9 @@ def diabetes_sub():
     name = session.get('name').capitalize()
     email = session.get('email')
     data_dp_1 = pd.read_csv(
-        r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\diabetes.csv")
+        r"diabetes.csv")
     data_dp_2 = pd.read_csv(
-        r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\diabetes-dataset.csv")
+        r"diabetes-dataset.csv")
     data = pd.DataFrame(columns=data_dp_1.columns)
     data = pd.concat([data, data_dp_1, data_dp_2], ignore_index=True)
 
@@ -148,7 +148,7 @@ def diabetes_sub():
 def stroke_sub():
     name = session.get('name').capitalize()
     email = session.get('email')
-    data_bs = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\fulldata.csv")
+    data_bs = pd.read_csv(r"fulldata.csv")
 
     data_bs.isnull().any().any()
     data_bs.dropna(inplace=True)
@@ -254,13 +254,13 @@ def stroke_sub():
 @app.route('/diseases_submit', methods=['GET', 'POST'])
 def diseases_sub():
     data_ds = pd.read_csv(
-        r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\disease_symptoms.csv")
-    desc = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\symptom_Description.csv")
-    prec = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\symptom_precaution.csv")
-    doct = pd.read_csv(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\Doctor_Versus_Disease.csv",
+        r"disease_symptoms.csv")
+    desc = pd.read_csv(r"symptom_Description.csv")
+    prec = pd.read_csv(r"symptom_precaution.csv")
+    doct = pd.read_csv(r"Doctor_Versus_Disease.csv",
                        encoding='latin1')
 
-    with open(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\unique_symptoms.pkl", "rb") as f:
+    with open(r"unique_symptoms.pkl", "rb") as f:
         unique_sym = pickle.load(f)
     name = session.get('name')
     print(name)
@@ -353,12 +353,12 @@ def tumor_sub():
     email = session.get('email')
     print(email)
 
-    model = load_model(r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\bestmodel.h5")
+    model = load_model(r"bestmodel.h5")
 
     '''Change the bestmodel.h5 path as per your preference
         Download bestmodel.h5 from the drive link given in repository
     '''
-    output_directory = r"C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\mri_folder"  # Replace with the directory where you want to save the image
+    output_directory = r"mri_folder"  # Replace with the directory where you want to save the image
     output_filename = "mri_image.jpg"  # Replace with your desired output filename (e.g., "output_image.png")
     image_extension = ".jpg"
 
@@ -377,16 +377,16 @@ def tumor_sub():
             file.save(output_path)
             print("Image saved successfully.")
 
-            with open(r'C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\mri_folder\mri_image.jpg', "wb") as f:
+            with open(r'mri_folder\mri_image.jpg', "wb") as f:
                 f.write(file.getbuffer())
 
             # Read the image file
-            image = Image.open(r'C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\mri_folder\mri_image.jpg')
+            image = Image.open(r'mri_folder\mri_image.jpg')
 
             # Convert image to grayscale
             image = image.convert("L")
 
-            path = r'C:\Users\divya.LAPTOP-0B1GN7G7\PycharmProjects\SymptoSage\mri_folder\mri_image.jpg'
+            path = r'mri_folder\mri_image.jpg'
             img = load_img(path, target_size=(224, 224))
             input_arr = img_to_array(img) / 255
             # print(input_arr)
